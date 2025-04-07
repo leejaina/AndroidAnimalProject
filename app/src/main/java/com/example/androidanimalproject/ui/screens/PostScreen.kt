@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -26,14 +25,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun PostScreen() {
-    var imageUrl by remember { mutableStateOf("") }
-    var name by remember { mutableStateOf("") }
-    var location by remember { mutableStateOf("") }
+    var postScreenUrl by remember { mutableStateOf("") }
+    var postScreenName by remember { mutableStateOf("") }
+    var postScreenAddress by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -50,15 +48,15 @@ fun PostScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        PostInputField(label = "사진 url", value = imageUrl) { imageUrl = it }
-        PostInputField(label = "이름", value = name) { name = it }
-        PostInputField(label = "주소", value = location) { location = it }
+        PostInputField(label = "사진 url 입력", value = postScreenUrl) { postScreenUrl = it }
+        PostInputField(label = "이름 입력", value = postScreenName) { postScreenName = it }
+        PostInputField(label = "주소 입력", value = postScreenAddress) { postScreenAddress = it }
 
         Spacer(modifier = Modifier.weight(1f))
 
         RegisterButton(onClick = {
             // 임시로 입력 내용 출력
-            Log.d("PostScreen", "URL: $imageUrl, 이름: $name, 주소: $location")
+            Log.d("PostScreen", "URL: $postScreenUrl, 이름: $postScreenName, 주소: $postScreenAddress")
         })
     }
 }
@@ -101,27 +99,36 @@ fun PostInputField(label: String, value: String, onValueChange: (String) -> Unit
 
 @Composable
 fun RegisterButton(onClick: () -> Unit) {
-    Button (
+    Button(
         onClick = onClick,
         modifier = Modifier
             .width(320.dp)
             .height(50.dp)
             .padding(bottom = 49.dp),
         shape = RoundedCornerShape(8.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA938))
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFFFFA938),
+            contentColor = Color.Black
+        )
     ) {
-        Text(
+        Text (
             text = "등록하기",
             fontSize = 18.sp,
-            fontFamily = FontFamily.Default, // Pretendard는 커스텀 폰트 등록 시 변경 가능
-            color = Color.Black
+            fontWeight = FontWeight.Bold
         )
     }
 }
+
 
 
 @Preview (showBackground = true)
 @Composable
 fun PostScreenPreview() {
     PostScreen()
+}
+
+@Preview (showBackground = true)
+@Composable
+fun RegisterButtonPreview() {
+    RegisterButton {  }
 }

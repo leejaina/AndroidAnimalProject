@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 data class Animal(
     val url : String,
     val name : String,
-    val status: String,
+    val status: AnimalStatus,
     val address: String
 )
 
