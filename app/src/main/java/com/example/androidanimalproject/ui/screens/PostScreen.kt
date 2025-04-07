@@ -1,6 +1,7 @@
 package com.example.androidanimalproject.ui.screens
 
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,41 +27,56 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.androidanimalproject.model.Animal
+import com.example.androidanimalproject.model.AnimalStatus
 
 @Composable
-fun PostScreen() {
+fun PostScreen(onRegister: (Animal) -> Unit) {
     var postScreenUrl by remember { mutableStateOf("") }
     var postScreenName by remember { mutableStateOf("") }
     var postScreenAddress by remember { mutableStateOf("") }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(horizontal = 28.dp)
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "등록하기",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 70.dp), // 버튼 높이만큼 패딩
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(
+                text = "등록하기",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+
+            PostInputField(label = "사진 url 입력", value = postScreenUrl) { postScreenUrl = it }
+            PostInputField(label = "이름 입력", value = postScreenName) { postScreenName = it }
+            PostInputField(label = "주소 입력", value = postScreenAddress) { postScreenAddress = it }
+        }
+
+        // 하단 고정 버튼
+        RegisterButton(
+            onClick = {
+                val newAnimal = Animal(
+                    name = postScreenName,
+                    url = postScreenUrl,
+                    address = postScreenAddress,
+                    status = AnimalStatus.PROTECTED
+                )
+                onRegister(newAnimal)
+            },
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 20.dp) // 바닥에서 띄우기
         )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        PostInputField(label = "사진 url 입력", value = postScreenUrl) { postScreenUrl = it }
-        PostInputField(label = "이름 입력", value = postScreenName) { postScreenName = it }
-        PostInputField(label = "주소 입력", value = postScreenAddress) { postScreenAddress = it }
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        RegisterButton(onClick = {
-            // 임시로 입력 내용 출력
-            Log.d("PostScreen", "URL: $postScreenUrl, 이름: $postScreenName, 주소: $postScreenAddress")
-        })
     }
 }
-
 
 @Composable
 fun PostInputField(label: String, value: String, onValueChange: (String) -> Unit) {
@@ -98,20 +114,19 @@ fun PostInputField(label: String, value: String, onValueChange: (String) -> Unit
 }
 
 @Composable
-fun RegisterButton(onClick: () -> Unit) {
+fun RegisterButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     Button(
         onClick = onClick,
-        modifier = Modifier
+        modifier = modifier
             .width(320.dp)
-            .height(50.dp)
-            .padding(bottom = 49.dp),
+            .height(50.dp),
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(0xFFFFA938),
             contentColor = Color.Black
         )
     ) {
-        Text (
+        Text(
             text = "등록하기",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
@@ -121,14 +136,21 @@ fun RegisterButton(onClick: () -> Unit) {
 
 
 
-@Preview (showBackground = true)
-@Composable
-fun PostScreenPreview() {
-    PostScreen()
-}
 
 @Preview (showBackground = true)
 @Composable
-fun RegisterButtonPreview() {
-    RegisterButton {  }
+fun PostScreenPreview() {
+    PostScreen {}
 }
+
+@Preview(showBackground = true)
+@Composable
+fun RegisterButtonPreview() {
+    RegisterButton(
+        onClick = {},
+        modifier = Modifier
+            .width(320.dp)
+            .height(50.dp)
+    )
+}
+

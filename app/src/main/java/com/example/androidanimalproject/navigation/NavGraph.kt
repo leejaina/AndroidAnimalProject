@@ -1,6 +1,8 @@
 package com.example.androidanimalproject.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,14 +15,25 @@ sealed class Screen(val route: String) {
     object Post : Screen("post")
 }
 
+
 @Composable
 fun NavGraph(navController: NavHostController, animalList: List<Animal>) {
+
+    val animalList = remember { mutableStateListOf<Animal>() }
+
+
     NavHost(navController = navController, startDestination = Screen.Search.route) {
         composable(Screen.Search.route) {
             SearchScreen(navController = navController, animal = animalList)
         }
         composable(Screen.Post.route) {
-            PostScreen()
+            PostScreen(
+                onRegister = { animal ->
+                    animalList.add(animal)
+                    navController.popBackStack()
+                }
+            )
         }
+
     }
 }
