@@ -67,7 +67,7 @@ fun SearchScreen (navController: NavController, animal: List<Animal>) {
             .padding(20.dp),
         contentAlignment = Alignment.BottomEnd
     ) {
-        AddButton()
+        AddButton(onClick = {navController.navigate("post")})
     }
 }
 
