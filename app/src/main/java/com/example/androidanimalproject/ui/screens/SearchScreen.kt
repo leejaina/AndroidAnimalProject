@@ -1,15 +1,19 @@
 package com.example.androidanimalproject.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -18,6 +22,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,8 +38,40 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.androidanimalproject.model.Animal
 import com.example.androidanimalproject.model.AnimalStatus
 import com.example.androidanimalproject.model.StatusBadge
+import androidx.navigation.NavController
 
 
+@Composable
+fun SearchScreen (navController: NavController, animal: List<Animal>) {
+    Column {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text("조회하기")
+        }
+        Spacer(Modifier.height(20.dp))
+        LazyColumn (
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            items (animal.size) { index ->
+                AnimalItemCard(animal[index], onClick = {})
+            }
+        }
+    }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp),
+        contentAlignment = Alignment.BottomEnd
+    ) {
+        AddButton()
+    }
+}
+
+//동물 프로필 카드
 @Composable
 fun AnimalItemCard(animal: Animal, onClick: () -> Unit) {
     Card(
@@ -121,4 +158,18 @@ fun AnimalItemCardPreview() {
     )
 
     AnimalItemCard(animal = sampleAnimal, onClick = {})
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SearchScreenPreviewDummy() {
+    val dummyList = listOf(
+        Animal("https://picsum.photos/130", "점박이", AnimalStatus.PROTECTED, "서울"),
+        Animal("https://picsum.photos/130", "재인이", AnimalStatus.MISSING, "부산")
+    )
+    LazyColumn {
+        items(dummyList.size) { index ->
+            AnimalItemCard(animal = dummyList[index], onClick = {})
+        }
+    }
 }
