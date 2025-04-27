@@ -1,15 +1,18 @@
 package com.example.androidanimalproject.ui.screens
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -73,7 +76,7 @@ fun PostScreen(onRegister: (Animal) -> Unit) {
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 20.dp) // 바닥에서 띄우기
+                .padding(bottom = 49.dp) // 바닥에서 띄우기
         )
     }
 }
@@ -82,7 +85,7 @@ fun PostScreen(onRegister: (Animal) -> Unit) {
 fun PostInputField(label: String, value: String, onValueChange: (String) -> Unit) {
     Column(
         modifier = Modifier
-            .padding(horizontal = 28.dp, vertical = 10.dp)
+            .padding(vertical = 10.dp)
     ) {
         Text(
             text = label,
@@ -90,26 +93,33 @@ fun PostInputField(label: String, value: String, onValueChange: (String) -> Unit
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(bottom = 8.dp)
         )
-        TextField(
-            value = value,
-            onValueChange = onValueChange,
+        Box(
             modifier = Modifier
                 .width(320.dp)
-                .height(44.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color(0xFFE7E7E7),
-                unfocusedContainerColor = Color(0xFFE7E7E7),
-                disabledContainerColor = Color(0xFFE7E7E7)
-            ),
-            placeholder = {
-                Text(
-                    text = "$label 입력",
-                    fontSize = 14.sp,
-                    color = Color.Gray
-                )
-            }
-        )
+                .height(44.dp)
+                .background(Color(0xFFE7E7E7),
+                    RoundedCornerShape(10.dp)),
+            contentAlignment = Alignment.CenterStart
+
+        ) {
+            BasicTextField(
+                value=value,
+                onValueChange=onValueChange,
+                singleLine = true,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .fillMaxWidth(),
+                decorationBox = {innerTextField ->
+                    if (value.isEmpty()) {
+                        Text(
+                            text = "$label",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
+                }
+            )
+        }
     }
 }
 
