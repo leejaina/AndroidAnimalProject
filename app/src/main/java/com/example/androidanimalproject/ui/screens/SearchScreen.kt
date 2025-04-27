@@ -23,6 +23,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,6 +40,7 @@ import com.example.androidanimalproject.model.Animal
 import com.example.androidanimalproject.model.AnimalStatus
 import com.example.androidanimalproject.model.StatusBadge
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 
 
 @Composable
@@ -79,11 +81,14 @@ fun AnimalItemCard(animal: Animal, onClick: () -> Unit) {
             .fillMaxWidth()
             .padding(8.dp)
             .clickable { onClick() },
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row (modifier = Modifier.padding(12.dp)) {
-            Image(
-                painter = rememberAsyncImagePainter(animal.url),
+            AsyncImage(
+                model = animal.url,
                 contentDescription = null,
                 modifier = Modifier
                     .size(130.dp)
