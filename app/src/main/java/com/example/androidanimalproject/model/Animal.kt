@@ -12,15 +12,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 data class Animal(
-    val url : String,
-    val name : String,
+    val url: String,
+    val name: String,
     val status: AnimalStatus,
     val address: String
 )
 
+@Serializable
 enum class AnimalStatus {
     PROTECTED, // 보호중
     MISSING,   // 실종신고
