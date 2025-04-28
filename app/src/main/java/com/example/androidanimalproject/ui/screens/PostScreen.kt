@@ -117,6 +117,7 @@ fun PostInputField(label: String, value: String, onValueChange: (String) -> Unit
                             color = Color.Gray
                         )
                     }
+                    innerTextField()
                 }
             )
         }

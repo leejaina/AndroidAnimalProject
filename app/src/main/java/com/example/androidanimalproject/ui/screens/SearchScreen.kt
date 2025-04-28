@@ -41,6 +41,9 @@ import com.example.androidanimalproject.model.AnimalStatus
 import com.example.androidanimalproject.model.StatusBadge
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.androidanimalproject.navigation.Screen
+import kotlinx.serialization.json.Json
+import okhttp3.internal.tls.TrustRootIndex
 
 
 @Composable
@@ -59,7 +62,10 @@ fun SearchScreen (navController: NavController, animal: List<Animal>) {
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
             items (animal.size) { index ->
-                AnimalItemCard(animal[index], onClick = {})
+                AnimalItemCard(animal[index], onClick = {
+                    val animalJson= Json.encodeToString(animal[index])
+                    navController.navigate(Screen.Detail.createRoute(animalJson))
+                })
             }
         }
     }
@@ -75,7 +81,9 @@ fun SearchScreen (navController: NavController, animal: List<Animal>) {
 
 //동물 프로필 카드
 @Composable
-fun AnimalItemCard(animal: Animal, onClick: () -> Unit) {
+fun AnimalItemCard(
+    animal: Animal, onClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -169,8 +177,8 @@ fun AnimalItemCardPreview() {
 @Composable
 fun SearchScreenPreviewDummy() {
     val dummyList = listOf(
-        Animal("https://picsum.photos/130", "점박이", AnimalStatus.PROTECTED, "서울"),
-        Animal("https://picsum.photos/130", "재인이", AnimalStatus.MISSING, "부산")
+        Animal("https://picsum.photos/130", "점박이", AnimalStatus.PROTECTED, "건국대학교 기숙사"),
+        Animal("https://picsum.photos/130", "재인이", AnimalStatus.MISSING, "마라탕집")
     )
     LazyColumn {
         items(dummyList.size) { index ->

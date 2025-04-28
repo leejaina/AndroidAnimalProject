@@ -1,5 +1,6 @@
 package com.example.androidanimalproject.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,23 +18,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.androidanimalproject.model.Animal
 import com.example.androidanimalproject.model.AnimalStatus
 import kotlinx.coroutines.sync.Mutex
 
 @Composable
-fun AnimalProfilePic() {
-
-}
-
-@Composable
-fun AnimalProfile() {
-
-}
-
-@Composable
-fun SearchDetailScreen(animal: Animal) {
+fun SearchDetailScreen(navController: NavController, animal: Animal) {
     Column {
         Box(
             modifier = Modifier
@@ -47,6 +40,9 @@ fun SearchDetailScreen(animal: Animal) {
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(horizontal = 21.dp)
+                    .clickable {
+                        navController.popBackStack()
+                    }
             )
         }
         AsyncImage(
@@ -83,6 +79,7 @@ fun SearchDetailScreenPreview() {
         status = AnimalStatus.PROTECTED,
         address = "건국대학교 기숙사"
     )
+    val navController= rememberNavController()
 
-    SearchDetailScreen(animal = sampleAnimal)
+    SearchDetailScreen(navController = navController, animal = sampleAnimal)
 }
