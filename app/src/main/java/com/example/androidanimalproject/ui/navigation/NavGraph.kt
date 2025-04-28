@@ -1,4 +1,4 @@
-package com.example.androidanimalproject.navigation
+package com.example.androidanimalproject.ui.navigation
 
 import android.net.Uri
 import androidx.compose.runtime.Composable
@@ -7,8 +7,8 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.androidanimalproject.model.Animal
-import com.example.androidanimalproject.model.AnimalStatus
+import com.example.androidanimalproject.ui.model.Animal
+import com.example.androidanimalproject.ui.model.AnimalStatus
 import com.example.androidanimalproject.ui.screens.PostScreen
 import com.example.androidanimalproject.ui.screens.SearchDetailScreen
 import com.example.androidanimalproject.ui.screens.SearchScreen
@@ -23,7 +23,6 @@ sealed class Screen(val route: String) {
         }
     }
 }
-
 
 @Composable
 fun NavGraph(navController: NavHostController, animalList: List<Animal>) {

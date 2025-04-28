@@ -1,4 +1,4 @@
-package com.example.androidanimalproject.navigation
+package com.example.androidanimalproject.ui.navigation
 
 import android.annotation.SuppressLint
 import kotlinx.serialization.Serializable

@@ -3,7 +3,6 @@ package com.example.androidanimalproject.ui.screens
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,9 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import com.example.androidanimalproject.model.Animal
-import com.example.androidanimalproject.model.AnimalStatus
-import kotlinx.coroutines.sync.Mutex
+import com.example.androidanimalproject.ui.model.Animal
+import com.example.androidanimalproject.ui.model.AnimalStatus
 
 @Composable
 fun SearchDetailScreen(navController: NavController, animal: Animal) {
@@ -79,7 +77,7 @@ fun SearchDetailScreenPreview() {
         status = AnimalStatus.PROTECTED,
         address = "건국대학교 기숙사"
     )
-    val navController= rememberNavController()
+    val navController = rememberNavController()
 
     SearchDetailScreen(navController = navController, animal = sampleAnimal)
 }

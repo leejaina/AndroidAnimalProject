@@ -1,8 +1,6 @@
 package com.example.androidanimalproject.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,8 +14,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,8 +26,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.androidanimalproject.model.Animal
-import com.example.androidanimalproject.model.AnimalStatus
+import com.example.androidanimalproject.ui.model.Animal
+import com.example.androidanimalproject.ui.model.AnimalStatus
 
 @Composable
 fun PostScreen(onRegister: (Animal) -> Unit) {
@@ -47,7 +43,7 @@ fun PostScreen(onRegister: (Animal) -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 70.dp), // 버튼 높이만큼 패딩
+                .padding(bottom = 70.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(24.dp))
@@ -145,9 +141,6 @@ fun RegisterButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     }
 }
 
-
-
-
 @Preview (showBackground = true)
 @Composable
 fun PostScreenPreview() {
@@ -164,4 +157,3 @@ fun RegisterButtonPreview() {
             .height(50.dp)
     )
 }
-

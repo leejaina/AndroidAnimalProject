@@ -1,7 +1,5 @@
 package com.example.androidanimalproject.ui.screens
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,8 +20,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,19 +31,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
-import com.example.androidanimalproject.model.Animal
-import com.example.androidanimalproject.model.AnimalStatus
-import com.example.androidanimalproject.model.StatusBadge
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.androidanimalproject.ui.model.Animal
+import com.example.androidanimalproject.ui.model.AnimalStatus
+import com.example.androidanimalproject.ui.model.StatusBadge
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.androidanimalproject.navigation.Screen
+import com.example.androidanimalproject.ui.navigation.Screen
+import com.example.androidanimalproject.ui.viewmodel.AnimalViewModel
 import kotlinx.serialization.json.Json
-import okhttp3.internal.tls.TrustRootIndex
 
 
 @Composable
-fun SearchScreen (navController: NavController, animal: List<Animal>) {
+fun SearchScreen(
+    navController: NavController, animal: List<Animal>,
+    viewModel: AnimalViewModel = viewModel()
+) {
+    viewModel.getAnimals()
     Column {
         Box(
             modifier = Modifier
@@ -58,12 +58,12 @@ fun SearchScreen (navController: NavController, animal: List<Animal>) {
             Text("조회하기")
         }
         Spacer(Modifier.height(20.dp))
-        LazyColumn (
+        LazyColumn(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
-            items (animal.size) { index ->
+            items(animal.size) { index ->
                 AnimalItemCard(animal[index], onClick = {
-                    val animalJson= Json.encodeToString(animal[index])
+                    val animalJson = Json.encodeToString(animal[index])
                     navController.navigate(Screen.Detail.createRoute(animalJson))
                 })
             }
@@ -75,7 +75,7 @@ fun SearchScreen (navController: NavController, animal: List<Animal>) {
             .padding(20.dp),
         contentAlignment = Alignment.BottomEnd
     ) {
-        AddButton(onClick = {navController.navigate("post")})
+        AddButton(onClick = { navController.navigate("post") })
     }
 }
 
@@ -92,9 +92,9 @@ fun AnimalItemCard(
         colors = CardDefaults.cardColors(
             containerColor = Color.White
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        //elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Row (modifier = Modifier.padding(12.dp)) {
+        Row(modifier = Modifier.padding(12.dp)) {
             AsyncImage(
                 model = animal.url,
                 contentDescription = null,
@@ -106,7 +106,7 @@ fun AnimalItemCard(
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            Column (modifier = Modifier.weight(1f)) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = animal.name,
                     fontSize = 18.sp,

@@ -1,4 +1,4 @@
-package com.example.androidanimalproject.model
+package com.example.androidanimalproject.ui.model
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -28,7 +28,6 @@ enum class AnimalStatus {
     MISSING,   // 실종신고
     SIGHTED    // 목격신고
 }
-
 
 @Composable
 fun StatusBadge(status: AnimalStatus) {
