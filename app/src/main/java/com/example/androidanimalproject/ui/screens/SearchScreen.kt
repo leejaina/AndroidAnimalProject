@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androidanimalproject.ui.model.Animal
 import com.example.androidanimalproject.ui.model.AnimalStatus
@@ -39,13 +40,15 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.androidanimalproject.ui.navigation.Screen
 import com.example.androidanimalproject.ui.viewmodel.AnimalViewModel
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 
 @Composable
 fun SearchScreen(
-    navController: NavController, animal: List<Animal>,
-    viewModel: AnimalViewModel = viewModel()
+    navController: NavController,
+    animal: List<Animal>,
+    viewModel: AnimalViewModel = hiltViewModel()
 ) {
     viewModel.getAnimals()
     Column {

@@ -1,4 +1,4 @@
-package com.example.androidanimalproject.data
+package com.example.androidanimalproject.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -38,6 +38,7 @@ object NetworkModule {
             connectTimeout(10, TimeUnit.SECONDS)
             writeTimeout(10, TimeUnit.SECONDS)
             readTimeout(10, TimeUnit.SECONDS)
+            addInterceptor(loggingInterceptor)
         }.build()
 
     @Provides
@@ -56,8 +57,8 @@ object NetworkModule {
         json: Json
     ): Retrofit =
         Retrofit.Builder()
-            .baseUrl("https://jhr75t9q8d.execute-api.ap-northeast-2.amazonaws.com/dev")
-            .client (okHttpClient)
+            .baseUrl(" https://jhr75t9q8d.execute-api.ap-northeast-2.amazonaws.com/")
+            .client(okHttpClient)
             .addConverterFactory(
                 json.asConverterFactory(requireNotNull("application/json".toMediaTypeOrNull()))
             )
